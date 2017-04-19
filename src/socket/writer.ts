@@ -3,11 +3,11 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 import { AbstractStreamMessageWriter } from "../stream";
-import { Socket } from "./socket";
+import { IWebSocket } from "./socket";
 
-export class SocketMessageWriter extends AbstractStreamMessageWriter {
+export class WebSocketMessageWriter extends AbstractStreamMessageWriter {
 
-    constructor(protected readonly socket: Socket) {
+    constructor(protected readonly socket: IWebSocket) {
         super();
     }
 

@@ -4,11 +4,11 @@
  * ------------------------------------------------------------------------------------------ */
 import { DataCallback } from "vscode-jsonrpc/lib/messageReader";
 import { AbstractStreamMessageReader } from "../stream";
-import { Socket } from "./socket";
+import { IWebSocket } from "./socket";
 
-export class SocketMessageReader extends AbstractStreamMessageReader {
+export class WebSocketMessageReader extends AbstractStreamMessageReader {
 
-    constructor(protected readonly socket: Socket) {
+    constructor(protected readonly socket: IWebSocket) {
         super();
     }
 

@@ -3,12 +3,8 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 import { MessageConnection, Logger } from 'vscode-jsonrpc';
-import { createSocketConnection, Socket } from './socket';
+import { createWebSocketConnection, IWebSocket } from './socket';
 import { ConsoleLogger } from './logger';
-
-export {
-    MessageConnection, Logger
-}
 
 export function listen(options: {
     webSocket: WebSocket;
@@ -19,12 +15,12 @@ export function listen(options: {
     const logger = options.logger || new ConsoleLogger();
     webSocket.onopen = () => {
         const socket = toSocket(webSocket);
-        const connection = createSocketConnection(socket, logger);
+        const connection = createWebSocketConnection(socket, logger);
         onConnection(connection);
     };
 }
 
-export function toSocket(webSocket: WebSocket): Socket {
+export function toSocket(webSocket: WebSocket): IWebSocket {
     return {
         send: content => webSocket.send(content),
         onMessage: cb => webSocket.onmessage = event => cb(event.data),

@@ -4,7 +4,7 @@
  * ------------------------------------------------------------------------------------------ */
 import { Disposable } from "../disposable";
 
-export interface Socket extends Disposable {
+export interface IWebSocket extends Disposable {
     send(content: string): void;
     onMessage(cb: (data: any) => void): void;
     onError(cb: (reason: any) => void): void;

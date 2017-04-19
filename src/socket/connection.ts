@@ -3,13 +3,13 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 import { MessageConnection, createMessageConnection, Logger } from "vscode-jsonrpc";
-import { Socket } from "./socket";
-import { SocketMessageReader } from "./reader";
-import { SocketMessageWriter } from "./writer";
+import { IWebSocket } from "./socket";
+import { WebSocketMessageReader } from "./reader";
+import { WebSocketMessageWriter } from "./writer";
 
-export function createSocketConnection(socket: Socket, logger: Logger): MessageConnection {
-    const messageReader = new SocketMessageReader(socket);
-    const messageWriter = new SocketMessageWriter(socket);
+export function createWebSocketConnection(socket: IWebSocket, logger: Logger): MessageConnection {
+    const messageReader = new WebSocketMessageReader(socket);
+    const messageWriter = new WebSocketMessageWriter(socket);
     const connection = createMessageConnection(messageReader, messageWriter, logger);
     connection.onClose(() => connection.dispose());
     return connection;
