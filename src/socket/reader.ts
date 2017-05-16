@@ -28,7 +28,7 @@ export class WebSocketMessageReader extends AbstractStreamMessageReader {
                 };
                 this.fireError(error);
             }
-            super.fireClose();
+            this.fireClose();
         });
     }
 
