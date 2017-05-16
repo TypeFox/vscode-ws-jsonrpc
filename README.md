@@ -44,7 +44,7 @@ const writer = new rpc.WebSocketMessageWriter(socket);
 const socketConnection = server.createConnection(reader, writer, () => socket.dispose())
 const serverConnection = server.createServerProcess('Example', 'node', ['example.js']);
 server.forward(socketConnection, serverConnection, message => {
-    if (isNotificationMessage(message)) {
+    if (rpc.isNotificationMessage(message)) {
         if (message.method === 'testNotification') {
             // handle the test notification
         }
