@@ -19,7 +19,7 @@
     "typescript": "^2.2.2"
   },
   "dependencies": {
-    "vscode-jsonrpc": "^3.2.0"
+    "vscode-jsonrpc": "^3.3.0"
   },
   "scripts": {
     "prepublish": "npm run compile",
