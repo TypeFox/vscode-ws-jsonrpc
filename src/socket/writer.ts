@@ -1,18 +1,21 @@
 /* --------------------------------------------------------------------------------------------
- * Copyright (c) 2017 TypeFox GmbH (http://www.typefox.io). All rights reserved.
+ * Copyright (c) 2018 TypeFox GmbH (http://www.typefox.io). All rights reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
-import { AbstractStreamMessageWriter } from "../stream";
+
+import { Message } from "vscode-jsonrpc/lib/messages";
+import { AbstractMessageWriter } from "vscode-jsonrpc/lib/messageWriter";
 import { IWebSocket } from "./socket";
 
-export class WebSocketMessageWriter extends AbstractStreamMessageWriter {
+export class WebSocketMessageWriter extends AbstractMessageWriter {
 
     constructor(protected readonly socket: IWebSocket) {
         super();
     }
 
-    protected send(content: string): void {
+    write(msg: Message): void {
         try {
+            const content = JSON.stringify(msg);
             this.socket.send(content);
         } catch (e) {
             this.fireError(e);

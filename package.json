@@ -14,17 +14,17 @@
   "main": "./lib/index.js",
   "typings": "./lib/index",
   "devDependencies": {
-    "@types/node": "^7.0.12",
-    "rimraf": "^2.6.1",
-    "typescript": "^2.2.2"
+    "@types/node": "^7.0.56",
+    "rimraf": "^2.6.2",
+    "typescript": "^2.7.2"
   },
   "dependencies": {
-    "vscode-jsonrpc": "^3.3.0"
+    "vscode-jsonrpc": "^3.6.0"
   },
   "scripts": {
     "prepublish": "npm run compile",
-    "compile": "./node_modules/.bin/tsc",
-    "watch": "./node_modules/.bin/tsc -w",
-    "clean": "./node_modules/.bin/rimraf lib"
+    "compile": "tsc",
+    "watch": "tsc -w",
+    "clean": "rimraf lib"
   }
 }

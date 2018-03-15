@@ -1,12 +1,12 @@
 /* --------------------------------------------------------------------------------------------
- * Copyright (c) 2017 TypeFox GmbH (http://www.typefox.io). All rights reserved.
+ * Copyright (c) 2018 TypeFox GmbH (http://www.typefox.io). All rights reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
-import { DataCallback } from "vscode-jsonrpc/lib/messageReader";
-import { AbstractStreamMessageReader } from "../stream";
+
+import { DataCallback, AbstractMessageReader } from "vscode-jsonrpc/lib/messageReader";
 import { IWebSocket } from "./socket";
 
-export class WebSocketMessageReader extends AbstractStreamMessageReader {
+export class WebSocketMessageReader extends AbstractMessageReader {
 
     protected state: 'initial' | 'listening' | 'closed' = 'initial';
     protected callback: DataCallback | undefined;
@@ -34,18 +34,18 @@ export class WebSocketMessageReader extends AbstractStreamMessageReader {
 
     listen(callback: DataCallback): void {
         if (this.state === 'initial') {
+            this.state = 'listening';
+            this.callback = callback;
             if (this.events.length !== 0) {
                 const event = this.events.pop()!;
                 if (event.message) {
-                    super.readMessage(event.message, callback);
+                    this.readMessage(event.message);
                 } else if (event.error) {
                     this.fireError(event.error);
                 } else {
                     this.fireClose();
                 }
             }
-            this.callback = callback;
-            this.state = 'listening';
         }
     }
 
@@ -53,7 +53,8 @@ export class WebSocketMessageReader extends AbstractStreamMessageReader {
         if (this.state === 'initial') {
             this.events.splice(0, 0, { message });
         } else if (this.state === 'listening') {
-            super.readMessage(message, this.callback!);
+            const data = JSON.parse(message);
+            this.callback!(data);
         }
     }
 

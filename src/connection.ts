@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------------------------
- * Copyright (c) 2017 TypeFox GmbH (http://www.typefox.io). All rights reserved.
+ * Copyright (c) 2018 TypeFox GmbH (http://www.typefox.io). All rights reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 import { MessageConnection, Logger } from 'vscode-jsonrpc';
@@ -25,8 +25,8 @@ export function toSocket(webSocket: WebSocket): IWebSocket {
         send: content => webSocket.send(content),
         onMessage: cb => webSocket.onmessage = event => cb(event.data),
         onError: cb => webSocket.onerror = event => {
-            if (event instanceof ErrorEvent) {
-                cb(event.message)
+            if ('message' in event) {
+                cb((event as any).message)
             }
         },
         onClose: cb => webSocket.onclose = event => cb(event.code, event.reason),
