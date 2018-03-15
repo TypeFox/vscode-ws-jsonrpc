@@ -9,6 +9,8 @@ import { IWebSocket } from "./socket";
 
 export class WebSocketMessageWriter extends AbstractMessageWriter {
 
+    protected errorCount = 0;
+
     constructor(protected readonly socket: IWebSocket) {
         super();
     }
@@ -18,7 +20,8 @@ export class WebSocketMessageWriter extends AbstractMessageWriter {
             const content = JSON.stringify(msg);
             this.socket.send(content);
         } catch (e) {
-            this.fireError(e);
+            this.errorCount++;
+            this.fireError(e, msg, this.errorCount);
         }
     }
 
