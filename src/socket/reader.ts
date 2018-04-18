@@ -36,7 +36,7 @@ export class WebSocketMessageReader extends AbstractMessageReader {
         if (this.state === 'initial') {
             this.state = 'listening';
             this.callback = callback;
-            if (this.events.length !== 0) {
+            while (this.events.length !== 0) {
                 const event = this.events.pop()!;
                 if (event.message) {
                     this.readMessage(event.message);
