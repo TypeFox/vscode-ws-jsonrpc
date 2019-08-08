@@ -1,6 +1,6 @@
 {
   "name": "vscode-ws-jsonrpc",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "VSCode JSON RPC over WebSocket",
   "author": "TypeFox GmbH (http://www.typefox.io)",
   "license": "MIT",
