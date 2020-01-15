@@ -8,7 +8,7 @@ import * as stream from 'stream';
 import * as cp from 'child_process';
 import { StreamMessageReader, StreamMessageWriter, SocketMessageReader, SocketMessageWriter } from "vscode-jsonrpc";
 import { IConnection, createConnection } from "./connection";
-import { IWebSocket, WebSocketMessageReader, WebSocketMessageWriter } from '../socket';
+import { IWebSocket, WebSocketMessageReader, WebSocketMessageWriter, IWebSocketConnection } from '../socket';
 
 export function createServerProcess(serverName: string, command: string, args?: string[], options?: cp.SpawnOptions): IConnection {
     const serverProcess = cp.spawn(command, args, options);
@@ -21,10 +21,10 @@ export function createServerProcess(serverName: string, command: string, args?: 
     return createProcessStreamConnection(serverProcess);
 }
 
-export function createWebSocketConnection(socket: IWebSocket): IConnection {
+export function createWebSocketConnection(socket: IWebSocket): IWebSocketConnection {
     const reader = new WebSocketMessageReader(socket);
     const writer = new WebSocketMessageWriter(socket);
-    return createConnection(reader, writer, () => socket.dispose());
+    return createConnection(reader, writer, () => socket.dispose(), { socket });
 }
 
 export function createProcessSocketConnection(process: cp.ChildProcess, outSocket: net.Socket, inSocket: net.Socket = outSocket): IConnection {
