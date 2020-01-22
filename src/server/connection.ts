@@ -19,7 +19,8 @@ export interface IConnection extends Disposable {
     onClose(callback: () => void): Disposable;
 }
 
-export function createConnection(reader: MessageReader, writer: MessageWriter, onDispose: () => void): IConnection {
+export function createConnection<T extends {}>(reader: MessageReader, writer: MessageWriter, onDispose: () => void,
+        extensions: T = {} as T): IConnection & T {
     const disposeOnClose = new DisposableCollection();
     reader.onClose(() => disposeOnClose.dispose());
     writer.onClose(() => disposeOnClose.dispose());
@@ -34,6 +35,7 @@ export function createConnection(reader: MessageReader, writer: MessageWriter, o
         onClose(callback: () => void): Disposable {
             return disposeOnClose.push(Disposable.create(callback));
         },
-        dispose: () => onDispose()
-    }
+        dispose: () => onDispose(),
+        ...extensions
+    };
 }
