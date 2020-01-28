@@ -16,10 +16,10 @@
   "devDependencies": {
     "@types/node": "^7.0.56",
     "rimraf": "^2.6.2",
-    "typescript": "3.5.3"
+    "typescript": "3.7.5"
   },
   "dependencies": {
-    "vscode-jsonrpc": "^4.1.0-next"
+    "vscode-jsonrpc": "^5.0.0"
   },
   "scripts": {
     "prepublish": "npm run compile",
