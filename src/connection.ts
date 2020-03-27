@@ -6,6 +6,12 @@ import { MessageConnection, Logger } from 'vscode-jsonrpc';
 import { createWebSocketConnection, IWebSocket } from './socket';
 import { ConsoleLogger } from './logger';
 
+function initProcess(websocket: WebSocket) {
+    const socket = toSocket(webSocket);
+    const connection = createWebSocketConnection(socket, logger);
+    onConnection(connection);   
+}
+
 export function listen(options: {
     webSocket: WebSocket;
     logger?: Logger;
@@ -13,11 +19,15 @@ export function listen(options: {
 }) {
     const { webSocket, onConnection } = options;
     const logger = options.logger || new ConsoleLogger();
-    webSocket.onopen = () => {
-        const socket = toSocket(webSocket);
-        const connection = createWebSocketConnection(socket, logger);
-        onConnection(connection);
-    };
+    
+    if (webSocket.readyState === WebSocket.OPEN) {
+        // websocket ready   
+        initProcess(webSocket);
+    } else {
+        webSocket.onopen = () => {
+            initProcess(webSocket);
+        };
+    }
 }
 
 export function toSocket(webSocket: WebSocket): IWebSocket {
