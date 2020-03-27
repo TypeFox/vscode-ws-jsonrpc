@@ -13,11 +13,19 @@ export function listen(options: {
 }) {
     const { webSocket, onConnection } = options;
     const logger = options.logger || new ConsoleLogger();
-    webSocket.onopen = () => {
-        const socket = toSocket(webSocket);
+    
+    const socket = toSocket(webSocket);
+    
+
+    if (webSocket.readyState === WebSocket.OPEN) {
         const connection = createWebSocketConnection(socket, logger);
-        onConnection(connection);
-    };
+        onConnection(connection);  
+    } else {
+        webSocket.onopen = () => {
+            const connection = createWebSocketConnection(socket, logger);
+            onConnection(connection);  
+        };
+    }
 }
 
 export function toSocket(webSocket: WebSocket): IWebSocket {
