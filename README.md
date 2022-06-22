@@ -1,7 +1,15 @@
-# VSCode WebSocket JSON RPC
+# ⚠️ vscode-ws-jsonrpc is deprecated.
+
+## Use [vscode-ws-jsonrpc](https://github.com/TypeFox/monaco-languageclient/tree/main/packages/vscode-ws-jsonrpc) instead
+
+-----
+
+## VSCode WebSocket JSON RPC
+
 NPM module to implement communication between a jsonrpc client and server over WebSocket.
 
 ### Client side connection handling
+
 ```ts
 import * as rpc from 'vscode-ws-jsonrpc';
 
@@ -17,6 +25,7 @@ rpc.listen({
 ```
 
 ### Server side connection handling
+
 ```ts
 import * as rpc from 'vscode-ws-jsonrpc';
 
@@ -34,6 +43,7 @@ connection.listen();
 ```
 
 ### Server side connection forwarding
+
 ```ts
 import * as rpc from 'vscode-ws-jsonrpc';
 import * as server from 'vscode-ws-jsonrpc/lib/server';
@@ -54,4 +64,5 @@ server.forward(socketConnection, serverConnection, message => {
 ```
 
 ## License
+
 [MIT](https://github.com/TypeFox/vscode-ws-jsonrpc/blob/master/License.txt)
